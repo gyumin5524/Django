@@ -57,7 +57,7 @@ class PostUpdate(APIView):
         # 4. 저장
         post = get_object_or_404(Post, id = pk) # <-디비
         data = request.data # <- 사용자한테서
-        serializer = PostSerializer(post, data=data) # 직렬화, 역직렬화 양방향
+        serializer = PostSerializer(post, data=data, partial = True) # 직렬화, 역직렬화 양방향
         if serializer.is_valid():
             serializer.save() #True, 저장
             return Response(serializer.data, status = status.HTTP_201_CREATED)
@@ -67,7 +67,7 @@ class PostUpdate(APIView):
 
         post = get_object_or_404(Post, id = pk) # <-디비
         data = request.data # <- 사용자한테서
-        serializer = PostSerializer(post, partial=data) # partial 부분수정
+        serializer = PostSerializer(post, data = data, partial = True) # partial 부분수정
         if serializer.is_valid():
             serializer.save() #True, 저장
             return Response(serializer.data, status = status.HTTP_201_CREATED)
